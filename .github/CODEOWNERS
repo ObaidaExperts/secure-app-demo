@@ -1,0 +1,132 @@
+# CODEOWNERS - Code Ownership & Mandatory Reviewers
+# 
+# This file defines who owns different parts of the codebase.
+# When a PR touches these files, the listed users/teams are
+# automatically requested as reviewers.
+#
+# Format: pattern @owner1 @owner2 @team
+# Patterns are matched bottom-to-top (last match wins)
+
+# ==============================================================================
+# DEFAULT OWNERS
+# ==============================================================================
+# These owners will be requested for review when someone opens a 
+# pull request unless a later match takes precedence.
+
+* @development-team
+
+
+# ==============================================================================
+# DOCUMENTATION
+# ==============================================================================
+# Technical writers and senior developers review all documentation
+
+/docs/ @tech-writers @senior-devs
+*.md @tech-writers
+
+
+# ==============================================================================
+# FRONTEND CODE
+# ==============================================================================
+# Frontend team owns all UI code
+
+/src/frontend/ @frontend-team @ui-lead
+/src/frontend/**/*.css @frontend-team @design-lead
+/src/frontend/**/*.html @frontend-team
+
+
+# ==============================================================================
+# BACKEND CODE
+# ==============================================================================
+# Backend team owns server-side code
+
+/src/backend/ @backend-team @backend-lead
+/src/backend/api/ @backend-team @api-architect
+
+
+# ==============================================================================
+# DATABASE
+# ==============================================================================
+# Database changes require DBA approval
+# This is critical - schema changes need expert review
+
+/src/database/ @database-team @dba-lead
+*.sql @database-team @dba-lead
+**/migrations/ @database-team @dba-lead
+
+
+# ==============================================================================
+# CONFIGURATION FILES
+# ==============================================================================
+# Production config requires senior engineer + DevOps approval
+
+/config/production.yml @devops-team @senior-engineer @security-team
+/config/*.prod.* @devops-team @senior-engineer
+
+# Development config only needs DevOps
+/config/development.yml @devops-team
+
+
+# ==============================================================================
+# CI/CD & BUILD
+# ==============================================================================
+# DevOps owns all CI/CD pipelines and build configurations
+
+.github/workflows/ @devops-team @ci-lead
+Dockerfile @devops-team
+docker-compose.yml @devops-team
+*.sh @devops-team
+
+
+# ==============================================================================
+# SECURITY SENSITIVE FILES
+# ==============================================================================
+# Security team must review authentication, authorization, and crypto
+
+/src/**/auth/ @security-team @backend-lead
+/src/**/security/ @security-team
+**/authentication.* @security-team
+**/authorization.* @security-team
+**/crypto.* @security-team
+
+
+# ==============================================================================
+# TESTING
+# ==============================================================================
+# QA team reviews all test files
+
+/tests/ @qa-team
+**/*.test.js @qa-team
+**/*.spec.js @qa-team
+
+
+# ==============================================================================
+# DEPENDENCIES
+# ==============================================================================
+# Senior engineers review dependency changes (security implications)
+
+package.json @senior-engineer @security-team
+package-lock.json @senior-engineer
+requirements.txt @senior-engineer @security-team
+Gemfile @senior-engineer
+go.mod @senior-engineer
+
+
+# ==============================================================================
+# INFRASTRUCTURE AS CODE
+# ==============================================================================
+# Infrastructure changes need DevOps + senior engineer approval
+
+/infrastructure/ @devops-team @infrastructure-lead
+*.tf @devops-team @infrastructure-lead
+*.tfvars @devops-team
+
+
+# ==============================================================================
+# ROOT CONFIGURATION FILES
+# ==============================================================================
+# Critical root files need multiple approvals
+
+/.github/CODEOWNERS @senior-engineer @tech-lead
+/.gitignore @development-team
+/LICENSE @legal-team @tech-lead
